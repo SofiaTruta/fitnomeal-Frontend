@@ -1,7 +1,5 @@
-const Welcome = () => {
-    return ( 
-        <h1>Landing Page</h1>
-     );
+export default function Welcome() {
+  return (
+    <div>Welcome</div>
+  )
 }
- 
-export default Welcome;
