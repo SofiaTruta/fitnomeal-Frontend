@@ -1,11 +1,19 @@
 'use client'
-import Logout from "@/components/logout/logout"
+import { useState } from "react"
+import NavBar from "@/components/navbar/NavBar"
+import NewWorkoutModal from "@/components/newWorkoutModal/NewWorkoutModal"
 
 export default function Home() {
+  const [muscleGroup, setMuscleGroup] = useState('Full Body')
+
   return (
     <>
+      <NavBar />
       <h1>Home</h1>
-      <Logout />
+      <NewWorkoutModal
+        muscleGroup={muscleGroup}
+        setMuscleGroup={setMuscleGroup}
+      />
     </>
 
   )
