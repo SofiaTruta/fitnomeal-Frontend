@@ -25,7 +25,7 @@ export default function NewWorkoutModal({ choice, setChoice }) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({choice}) //???? unsure if this will work
+                body: JSON.stringify({choice})
             })
         } catch (error) {
             console.log('could not send exercise choice over to backend', error)
