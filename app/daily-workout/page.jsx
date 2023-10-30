@@ -1,3 +1,4 @@
+
 "use client"
 import { useEffect, useState } from 'react';
 
@@ -23,4 +24,3 @@ function DailyWorkoutsPage() {
 }
 
 export default DailyWorkoutsPage;
-
