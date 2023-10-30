@@ -23,4 +23,3 @@ function DailyWorkoutsPage() {
 }
 
 export default DailyWorkoutsPage;
-
