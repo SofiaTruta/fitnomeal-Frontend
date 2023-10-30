@@ -1,20 +1,33 @@
 'use client'
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSession } from "next-auth/react"
 import NavBar from "@/components/navbar/NavBar"
 import NewWorkoutModal from "@/components/newWorkoutModal/NewWorkoutModal"
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
-  const [muscleGroup, setMuscleGroup] = useState('Full Body')
+  //check if user is signed in already
+  const { data: session, status } = useSession()
+  const router = useRouter()
+
+  useEffect(() => {
+    console.log(status)
+    if (status === "unauthenticated") router.push('/welcome')
+   
+  }, [session])
+
+  //state to pass down to props
+  const [choice, setChoice] = useState('Full Body')
 
   return (
     <>
-      <NavBar />
-      <h1>Home</h1>
-      <NewWorkoutModal
-        muscleGroup={muscleGroup}
-        setMuscleGroup={setMuscleGroup}
-      />
+      {status === "authenticated" ? (
+        <> 
+          <NavBar />
+          <h1>Home</h1>
+          <NewWorkoutModal choice={choice} setChoice={setChoice} />
+        </>
+      ) : null}
     </>
-
   )
 }

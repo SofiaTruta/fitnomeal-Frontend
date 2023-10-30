@@ -1,8 +1,10 @@
 
 import Link from "next/link"
 import { useState } from "react"
+import { useSession } from "next-auth/react"
 
-export default function NewWorkoutModal({ muscleGroup, setMuscleGroup }) {
+export default function NewWorkoutModal({ choice, setChoice }) {
+    const { data: session, status } = useSession()
 
     const [isModalOpen, setIsModalOpen] = useState(false)
     const openModal = () => {
@@ -15,14 +17,14 @@ export default function NewWorkoutModal({ muscleGroup, setMuscleGroup }) {
     const WORKOUT_DATA = `${process.env.BACKEND_CONNECTION}`
 
     const confirmWorkout = async() => {
-        console.log(muscleGroup)
+        console.log(session)
         try {
             await fetch(`${WORKOUT_DATA}/workouts/new`,{
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({muscleGroup}) //???? unsure if this will work
+                body: JSON.stringify({choice}) //???? unsure if this will work
             })
         } catch (error) {
             console.log('could not send exercise choice over to backend', error)
@@ -67,8 +69,8 @@ export default function NewWorkoutModal({ muscleGroup, setMuscleGroup }) {
                             <div className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
                                 <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choose from the following options:</label>
                                 <select
-                                    value={muscleGroup}
-                                    onChange={(event => setMuscleGroup(event.target.value))}
+                                    value={choice}
+                                    onChange={(event => setChoice(event.target.value))}
                                     id="countries"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option>Full Body</option>
