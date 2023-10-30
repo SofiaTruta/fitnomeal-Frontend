@@ -1,6 +1,19 @@
+import Link from 'next/link'; // Import Link from Next.js
+import WorkoutHistory from '../models/WorkoutHistory'; // Import your Mongoose model
 
-export default function History() {
+function WorkoutHistoryPage({ workoutHistory }) {
   return (
-    <div>History</div>
-  )
+    <div>
+      <h1>Workout History</h1>
+      <ul>
+        {workoutHistory.map((entry) => (
+          <li key={entry._id}>
+            <Link href={`/workout-details/${entry._id}`}>
+              <a>{entry.date}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
