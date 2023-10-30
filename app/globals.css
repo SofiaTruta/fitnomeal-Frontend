@@ -9,3 +9,4 @@
 .btn-dark{
     @apply ml-auto w-1/6 bg-gray-800 text-white p-2 rounded font-semibold hover:bg-gray-900
 }
+
