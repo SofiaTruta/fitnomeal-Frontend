@@ -14,12 +14,13 @@ export default function NewWorkoutModal({ choice, setChoice }) {
         setIsModalOpen(false)
     }
 
-    const WORKOUT_DATA = `${process.env.BACKEND_CONNECTION}`
+    const WORKOUT_DATA = process.env.NEXT_PUBLIC_BACKEND_CONNECTION
 
     const confirmWorkout = async() => {
-        console.log(session)
+        console.log(choice)
+
         try {
-            await fetch(`${WORKOUT_DATA}/workouts/new`,{
+            await fetch(`${WORKOUT_DATA}/daily-workout/new`,{
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"

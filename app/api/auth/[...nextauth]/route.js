@@ -1,7 +1,7 @@
 import NextAuth from "next-auth/next";
 import GoogleProvider from 'next-auth/providers/google'
 
-const USER_DATA = `${process.env.BACKEND_CONNECTION}`
+const USER_DATA = `${process.env.NEXT_PUBLIC_BACKEND_CONNECTION}`
 
 export const authOptions = {
     providers: [
