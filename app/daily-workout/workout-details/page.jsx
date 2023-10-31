@@ -1,6 +1,9 @@
 // make this page dynamic somehow?
 'use client'
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { WorkoutContext } from "@/app/contexts/workout-context"
+
+
 
 const workoutData = {
   bodyPart: "back",
@@ -20,6 +23,9 @@ const workoutData = {
 };
 
 export default function WorkoutDetails() {
+  const {finalWorkout, setFinalWorkout} = useContext(WorkoutContext)
+  console.log('final workout details page log',finalWorkout)
+
   const [showInstructions, setShowInstructions] = useState(false)
   const toggleInstructions = () => {
     setShowInstructions(!showInstructions);
