@@ -5,6 +5,7 @@ import { WorkoutContext } from "@/app/contexts/workout-context"
 
 
 
+
 function DailyWorkoutsPage() {
   const {finalWorkout, setFinalWorkout} = useContext(WorkoutContext)
 
