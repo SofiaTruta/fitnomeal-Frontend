@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Provider from '@/components/provider/Provider'
+import WorkoutProvider from './contexts/workout-context'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,7 +15,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <Provider>
+          <WorkoutProvider>
           {children}
+          </WorkoutProvider>
         </Provider>
       </body>
     </html>
