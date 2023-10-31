@@ -28,7 +28,7 @@ export default function NewWorkoutModal({ choice, setChoice }) {
         console.log('accessing context?', finalWorkout)
 
         try {
-            const response = await fetch(`${WORKOUT_DATA}/daily-workout/new`, {
+            await fetch(`${WORKOUT_DATA}daily-workout/new`,{
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
