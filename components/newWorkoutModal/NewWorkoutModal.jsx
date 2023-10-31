@@ -20,7 +20,7 @@ export default function NewWorkoutModal({ choice, setChoice }) {
         console.log(choice)
 
         try {
-            await fetch(`${WORKOUT_DATA}/daily-workout/new`,{
+            await fetch(`${WORKOUT_DATA}daily-workout/new`,{
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"

@@ -1,14 +1,12 @@
-
+'use client'
 import { useEffect, useState } from 'react';
+import WorkoutDetails from './workout-details/page';
 
 function DailyWorkoutsPage() {
+
   const [dailyWorkout, setDailyWorkout] = useState([]);
 
-  useEffect(() => {
-    fetch('/daily-workout') // Make a request to the backend API endpoint
-      .then((response) => response.json())
-      .then((data) => setDailyWorkout(data.dailyWorkout));
-  }, []);
+  <WorkoutDetails dailyWorkout={dailyWorkout}/>
 
   return (
     <div>
