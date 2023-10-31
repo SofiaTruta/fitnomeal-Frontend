@@ -11,7 +11,7 @@ export default function Home() {
   const router = useRouter()
 
   useEffect(() => {
-    console.log(status)
+    // console.log(status)
     if (status === "unauthenticated") router.push('/welcome')
    
   }, [session])
