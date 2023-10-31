@@ -4,7 +4,7 @@ import { useState, createContext } from "react"
 export const WorkoutContext = createContext({})
 
 export default function WorkoutProvider({ children }) {
-    const [finalWorkout, setFinalWorkout] = useState('accessing the context! yay!')
+    const [finalWorkout, setFinalWorkout] = useState(null)
 
     return (
         <WorkoutContext.Provider value={{

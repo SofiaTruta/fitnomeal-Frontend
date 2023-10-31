@@ -7,6 +7,7 @@ import { WorkoutContext } from "@/app/contexts/workout-context"
 
 export default function NewWorkoutModal({ choice, setChoice }) {
     const { data: session, status } = useSession()
+
     const router = useRouter()
 
     const {finalWorkout, setFinalWorkout} = useContext(WorkoutContext)
@@ -44,7 +45,7 @@ export default function NewWorkoutModal({ choice, setChoice }) {
 
     useEffect(() => {
         console.log('finalWorkout', finalWorkout)
-        // if (finalWorkout !== null) router.push('/daily-workout')
+        if (finalWorkout !== null) router.push('/daily-workout/workout-details')
     }, [finalWorkout])
 
     return (
@@ -100,10 +101,10 @@ export default function NewWorkoutModal({ choice, setChoice }) {
                         </div>
 
                         <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                            <Link href={""} //redirect here please
+                            <button href={""}
                                 onClick={confirmWorkout} //MAKE IT SEND THE INFO OVER
                                 type="button"
-                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Let's go!</Link>
+                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Let's go!</button>
 
                         </div>
                     </div>
