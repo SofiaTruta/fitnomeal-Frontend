@@ -14,12 +14,15 @@ export default function WorkoutHistoryPage() {
       const email = session.user.email;
       async function fetchWorkoutHistory() {
         try {
-          const response = await fetch(`${WORKOUT_DATA}/workout-history/history/${email}`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
+          const response = await fetch(
+            `${WORKOUT_DATA}/workout-history/history/${email}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
           const result = await response.json();
           console.log(result);
@@ -33,28 +36,27 @@ export default function WorkoutHistoryPage() {
     }
   }, [session]);
 
-
-// const Workouts = workoutHistory.map(workout => (
-//   <div key={index}>
-//     <h2>{workout.name}</h2>
-//     <img src={workout.gifUrl} alt="Workout GIF" />
-//   </div>
-// ));
-
   return (
     <div>
       <NavBar workout={workoutHistory} />
-      <h1>WorkoutHistoryPage</h1>
-      {workoutHistory ? (
-        workoutHistory.map((workout, index) => (
+      <h1 style={{ fontSize: "24px", margin: "10px", padding: "10px" }}>
+        WorkoutHistoryPage
+      </h1>
+      <div>
+        {workoutHistory &&
+          workoutHistory.map((workout, index) => (
+            <div key={workout._id}>
+
+              <p style={{ fontSize: "18px", margin: "5px" }}>Date: {new Date(workout.date).toLocaleDateString()}</p>
+              <p>Status: {workout.status}</p>
+              {workout.exercises.map((sWorkout, index) => (
           <div key={index}>
-            <p>Date: {new Date(workout.date).toLocaleDateString()}</p>
-            <p>Status: {workout.status}</p>
-          </div>
-        ))
-      ) : (
-        <p>Loading workout history...</p>
-      )}
+            {sWorkout.name}
+            </div>
+              ))}
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

@@ -88,8 +88,9 @@ const closeModal = () => {
   }
 
   return (
-    <div style={{ margin: "20px", padding: "10px", backgroundColor: "#f5f5f5" }}>
+    <div>
       <NavBar></NavBar>
+    <div style={{ margin: "20px", padding: "10px", backgroundColor: "#f5f5f5" }}>
       <h1 style={{ fontSize: "24px", marginBottom: "10px" }}>Profile page</h1>
 
       {userData && (
@@ -127,5 +128,5 @@ const closeModal = () => {
           {/* Toggle button to show/hide the form */}
           <button className="btn-pink:hover .text-color-dark" onClick={() => setDisplayForm(!displayForm)}>Edit Details</button>
           <ThankYouModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} openModal={openModal} closeModal={closeModal}/>
-        </div>
+        </div></div>
   )} 
