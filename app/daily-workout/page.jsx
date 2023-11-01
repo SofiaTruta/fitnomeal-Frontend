@@ -4,6 +4,7 @@ import { WorkoutContext } from "@/app/contexts/workout-context"
 import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
 import NewWorkoutModal from '@/components/newWorkoutModal/NewWorkoutModal';
+import NavBar from '@/components/navbar/NavBar';
 
 export default function DailyWorkoutsPage() {
   const { finalWorkout, setFinalWorkout } = useContext(WorkoutContext)
@@ -42,6 +43,7 @@ export default function DailyWorkoutsPage() {
   ));
   return (
     <div>
+        <NavBar/>
       <h1 style={{ fontSize: "24px", marginBottom: "10px" }}>Daily Workouts</h1>
       <ul>
         {Workouts}
