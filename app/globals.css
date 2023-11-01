@@ -9,4 +9,27 @@
 .btn-dark{
     @apply ml-auto w-1/6 bg-gray-800 text-white p-2 rounded font-semibold hover:bg-gray-900
 }
+.bg-purple {
+    background-color: #8763c4
+}
+.bg-light-purple {
+    background-color: #c9b8e4;
+}
 
+.bg-pink {
+    background-color: #d455b1
+}
+.txt-color-dark {
+    color:#27284a
+}
+.btn-purple {
+    background-color: #9371c9;
+}
+.btn-pink:hover {
+    background-color: #d455b1
+}
+
+.btn {
+    @apply inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg hover:bg-pink-500 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800
+
+}
