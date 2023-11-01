@@ -37,21 +37,22 @@ export default function DailyWorkoutsPage() {
   }
 
   const Workouts = finalWorkout.map(workout => (
-    <div key={workout._id}>
-      <h2>{workout.name}</h2>
+    <div key={workout._id} style={{ backgroundColor: "#f5f5f5", margin: "10px", padding: "10px" }}>
+      <h2 style={{ fontSize: "18px", marginBottom: "5px" }}>{workout.name}</h2>
     </div>
   ));
   return (
     <div>
-      <h1>Daily Workouts</h1>
+      <h1 style={{ fontSize: "24px", marginBottom: "10px" }}>Daily Workouts</h1>
       <ul>
         {Workouts}
       </ul>
-      <h3>Happy with this workout</h3>
-      <button onClick={handleSave}>Click Me</button>
-      <h3>Want another one?</h3>
-      <button onClick={handleRefresh}>Click Here!</button>
+      <h3 style={{ fontSize: "16px" }}>Happy with this workout</h3>
+      <button style={{ fontSize: "16px", backgroundColor: "#007BFF", color: "#fff", padding: "5px 10px", border: "none", borderRadius: "4px" }} onClick={handleSave}>Click Me</button>
+      <h3 style={{ fontSize: "16px" }}>Want another one?</h3>
+      <button style={{ fontSize: "16px", backgroundColor: "#007BFF", color: "#fff", padding: "5px 10px", border: "none", borderRadius: "4px" }} onClick={handleRefresh}>Click Here!</button>
     </div>
   );
-  }
+}
+
 
