@@ -36,17 +36,5 @@ export default function NavBar() {
     </div>
   </div>
 </nav>
-
-
-
-
-    // <>
-    //   <div>Home</div>
-    //   <div>Goals</div>
-    //   <div>Progress</div>
-    //   <div>History</div>
-    //   <Logout />
-    // </>
-
   )
 }
