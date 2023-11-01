@@ -45,7 +45,7 @@ export default function NewWorkoutModal({ choice, setChoice }) {
 
     useEffect(() => {
         console.log('finalWorkout', finalWorkout)
-        if (finalWorkout !== null) router.push('/daily-workout/workout-details')
+        if (finalWorkout !== null) router.push('/daily-workout')
     }, [finalWorkout])
 
     return (
@@ -92,7 +92,7 @@ export default function NewWorkoutModal({ choice, setChoice }) {
                                     <option>Full Body</option>
                                     <option>Upper Body</option>
                                     <option>Lower Body</option>
-                                    <option>Core</option>
+                                    <option>Cardio</option>
                                 </select>
                             </div>
                             <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
