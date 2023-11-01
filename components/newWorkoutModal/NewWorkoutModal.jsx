@@ -25,7 +25,7 @@ export default function NewWorkoutModal({ choice, setChoice }) {
 
     const confirmWorkout = async () => {
 
-        console.log('accessing context?', finalWorkout)
+        
 
         try {
             const response = await fetch(`${WORKOUT_DATA}/daily-workout/new`, {
@@ -44,7 +44,6 @@ export default function NewWorkoutModal({ choice, setChoice }) {
     }
 
     useEffect(() => {
-        console.log('finalWorkout', finalWorkout)
         if (finalWorkout !== null) router.push('/daily-workout')
     }, [finalWorkout])
 
@@ -54,7 +53,7 @@ export default function NewWorkoutModal({ choice, setChoice }) {
                 onClick={isModalOpen ? closeModal : openModal}
                 data-modal-target="default-modal"
                 data-modal-toggle="default-modal"
-                className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="block text-white bg-purple-600 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-m px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button">
                 {isModalOpen ? "Close Modal" : "Give me a new workout"}
             </button>
@@ -64,7 +63,7 @@ export default function NewWorkoutModal({ choice, setChoice }) {
                 data-modal-show=""
                 tabIndex="-1"
                 aria-hidden="true"
-                className={`fixed top-0 left-0 right-0 z-50 ${isModalOpen ? "" : "hidden"} w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full`}>
+                className={`fixed inset-0 flex items-center justify-center z-50 ${isModalOpen ? "" : "hidden"} overflow-x-hidden overflow-y-auto`}>
 
                 <div className="relative w-full max-w-2xl max-h-full">
 
@@ -100,12 +99,11 @@ export default function NewWorkoutModal({ choice, setChoice }) {
                             </p>
                         </div>
 
-                        <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
+                        <div className="flex items-center p-6 space-x-2 border-gray-200 rounded-b dark:border-gray-600">
                             <button href={""}
                                 onClick={confirmWorkout} 
                                 type="button"
-                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Let's go!</button>
-
+                                className="text-white bg-purple-600 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mx-auto">Let's go!</button>
                         </div>
                     </div>
                 </div>
