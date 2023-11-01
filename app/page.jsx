@@ -38,15 +38,11 @@ export default function Home() {
 
 
     if (status === "unauthenticated") router.push('/welcome')
-
-
   }, [session]);
 
 
   //state to pass down to props
   const [choice, setChoice] = useState('Full Body')
-
-
 
   return (
     <>
