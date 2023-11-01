@@ -3,10 +3,13 @@ import { useEffect, useState, useContext } from 'react';
 import { WorkoutContext } from "@/app/contexts/workout-context"
 import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
+import NewWorkoutModal from '@/components/newWorkoutModal/NewWorkoutModal';
 
 export default function DailyWorkoutsPage() {
   const { finalWorkout, setFinalWorkout } = useContext(WorkoutContext)
+  const [choice, setChoice] = useState('Full Body')
 
+  console.log(finalWorkout);
   const { data: session, status } = useSession()
   const userEmail = session?.user?.email
 
@@ -32,13 +35,9 @@ export default function DailyWorkoutsPage() {
     }
   }
 
-  function handleRefresh() {
-
-  }
-
-  const Workouts = finalWorkout.map(workout => (
+  const Workouts = finalWorkout.map((workout, index) => (
     <div key={workout._id} style={{ backgroundColor: "#f5f5f5", margin: "10px", padding: "10px" }}>
-      <h2 style={{ fontSize: "18px", marginBottom: "5px" }}>{workout.name}</h2>
+      <h2 style={{ fontSize: "18px", marginBottom: "5px" }}>{index + 1}. {workout.name}</h2>
     </div>
   ));
   return (
@@ -50,7 +49,7 @@ export default function DailyWorkoutsPage() {
       <h3 style={{ fontSize: "16px" }}>Happy with this workout</h3>
       <button style={{ fontSize: "16px", backgroundColor: "#007BFF", color: "#fff", padding: "5px 10px", border: "none", borderRadius: "4px" }} onClick={handleSave}>Click Me</button>
       <h3 style={{ fontSize: "16px" }}>Want another one?</h3>
-      <button style={{ fontSize: "16px", backgroundColor: "#007BFF", color: "#fff", padding: "5px 10px", border: "none", borderRadius: "4px" }} onClick={handleRefresh}>Click Here!</button>
+      <NewWorkoutModal choice={choice} setChoice={setChoice}/>
     </div>
   );
 }

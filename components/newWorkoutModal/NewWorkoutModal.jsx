@@ -37,10 +37,10 @@ export default function NewWorkoutModal({ choice, setChoice }) {
             })
             const result = await response.json()
             setFinalWorkout(result)
-
         } catch (error) {
             console.log('could not send exercise choice over to backend', error)
         }
+        closeModal()
     }
 
     useEffect(() => {
