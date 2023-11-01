@@ -6,11 +6,11 @@ import NewWorkoutModal from "@/components/newWorkoutModal/NewWorkoutModal"
 import { useRouter } from 'next/navigation'
 
 export default function Home() {
-  const [user, setUser] = useState()
 
   //check if user is signed in already
   const { data: session, status } = useSession()
   const email = session?.user?.email
+
 
   const router = useRouter()
 
@@ -53,7 +53,7 @@ export default function Home() {
       {status === "authenticated" ? (
         <>
           <NavBar />
-          <h1>Home</h1>
+          <h1>Hi </h1>
           <NewWorkoutModal choice={choice} setChoice={setChoice} />
         </>
       ) : null}
