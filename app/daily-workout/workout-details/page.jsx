@@ -22,8 +22,7 @@ const workoutData = {
   ],
 };
 
-export default function WorkoutDetails({ workouts }) {
-  console.log( workouts );
+export default function WorkoutDetails() {
   const {finalWorkout, setFinalWorkout} = useContext(WorkoutContext)
   console.log('final workout details page log',finalWorkout)
 
