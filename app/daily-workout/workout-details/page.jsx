@@ -19,7 +19,7 @@ export default function WorkoutDetails() {
     <div className="bg-light-purple flex flex-col space-y-4 justify-center items-center">
 
      { finalWorkout.map((workout, index) => (
-    <div key={workout._id} style={{ backgroundColor: "#F5F5F5", margin: "10px", padding: "10px" }}>
+    <div key={workout._id}>
      
   
         <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
