@@ -10,7 +10,7 @@ export default function DailyWorkoutsPage() {
   const { finalWorkout, setFinalWorkout } = useContext(WorkoutContext)
   const [choice, setChoice] = useState('Full Body')
 
-  console.log(finalWorkout);
+
   const { data: session, status } = useSession()
   const userEmail = session?.user?.email
 
@@ -19,7 +19,7 @@ export default function DailyWorkoutsPage() {
   const router = useRouter()
 
   async function handleSave() {
-    router.push("daily-workout/workout-details")
+    
     try {
       await fetch(`${WORKOUT_DATA}/daily-workout/newWorkout`, {
         method: 'POST',
@@ -31,6 +31,7 @@ export default function DailyWorkoutsPage() {
           exercises: finalWorkout,
         })
       })
+      router.push("daily-workout/workout-details")
     } catch (error) {
       console.log('could not send exercise choice over to backend', error)
     }
@@ -49,7 +50,7 @@ export default function DailyWorkoutsPage() {
         {Workouts}
       </ul>
       <h3 style={{ fontSize: "16px" }}>Happy with this workout</h3>
-      <button style={{ fontSize: "16px", backgroundColor: "#007BFF", color: "#fff", padding: "5px 10px", border: "none", borderRadius: "4px" }} onClick={handleSave}>Click Me</button>
+      <button style={{ fontSize: "16px", backgroundColor: "#8763c4", color: "#fff", padding: "5px 10px", border: "none", borderRadius: "4px" }} onClick={handleSave}>Click Me</button>
       <h3 style={{ fontSize: "16px" }}>Want another one?</h3>
       <NewWorkoutModal choice={choice} setChoice={setChoice}/>
     </div>
