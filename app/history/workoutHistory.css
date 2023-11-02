@@ -1,0 +1,45 @@
+/* workoutHistory.css */
+
+.workout-history-container {
+    margin: 20px;
+    padding: 10px;
+  }
+  
+  .page-heading {
+    font-size: 24px;
+    margin: 10px;
+    padding: 10px;
+  }
+  
+  .workout-card {
+    background-color: #f5f5f5;
+    margin: 10px;
+    padding: 10px;
+  }
+  
+  .workout-date {
+    font-size: 18px;
+    margin: 5px;
+  }
+  
+  .workout-status {
+    font-weight: bold;
+  }
+  
+  .exercise-list {
+    margin-top: 10px;
+  }
+  
+  .exercise-item {
+    font-size: 16px;
+    margin: 5px;
+  }
+
+  .deleteButton {
+    background-color: pink;
+  }
+  
+.workout{
+    color: red;
+    padding-left: 8vmin;
+}
