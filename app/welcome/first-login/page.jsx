@@ -27,8 +27,6 @@ export default function FirstLogin() {
   }
 
   async function submitDetails() {
-    router.push("/");
-
     try {
       await fetch(`${WORKOUT_DATA}/users/update`, {
         method: "PUT",
@@ -48,6 +46,7 @@ export default function FirstLogin() {
     } catch (error) {
       console.log("error sending form data", error);
     }
+    router.push("/");
   }
 
   return (

@@ -50,7 +50,7 @@ const closeModal = () => {
   }, [session]);
 
   function handleChange(evt) {
-    const newFormData = { ...formData, [evt.target.name]: [evt.target.value] };
+    const newFormData = { ...formData, [evt.target.name]: evt.target.value };
     setFormData(newFormData);
     console.log(formData);
   }
@@ -66,15 +66,14 @@ const closeModal = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: session?.user.email,
+          email: session?.user?.email,
           weight: formData.weight,
           height: formData.height,
           goalWeight: formData.goalWeight,
           workoutGoal: formData.workoutGoal,
         }),
-      });
-  
-      if (response.ok) {
+      })
+      .then(() => 
         // Update the user data state with the new values
         setUserData((prevUserData) => ({
           ...prevUserData,
@@ -82,10 +81,8 @@ const closeModal = () => {
           height: formData.height,
           goalWeight: formData.goalWeight,
           workoutGoal: formData.workoutGoal,
-        }));
-      } else {
-        console.log("Error updating user data");
-      }
+        }))
+      )
     } catch (error) {
       console.log("Error sending form data", error);
     }
