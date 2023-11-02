@@ -67,8 +67,13 @@ export default function WorkoutDetails() {
   }
 
   useEffect(() => {
-    getDailyWorkout()
-  }, [status])
+    async function reload() {
+      await getDailyWorkout()
+    }
+
+    reload()
+    
+  }, [session])
 
 
   return (
