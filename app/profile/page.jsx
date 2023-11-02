@@ -15,6 +15,7 @@ export default function Profile() {
     weight: 0,
     height: 0,
     goalWeight: 0,
+    workoutGoal: 0,
   });
 
 

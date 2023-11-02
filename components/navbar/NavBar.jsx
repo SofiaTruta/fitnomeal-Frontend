@@ -68,7 +68,7 @@ export default function NavBar() {
                 className="block py-2 pl-3 pr-4 text-white bg-transparent hover:bg-purple-200 hover:text-purple-950 rounded md:bg-transparent md:p-0 dark:text-white md:dark:text-blue-500 no-underline"
                 onClick={closeMenu} 
               >
-                Progress
+                My Goals
               </Link>
             </li>
             <li>
