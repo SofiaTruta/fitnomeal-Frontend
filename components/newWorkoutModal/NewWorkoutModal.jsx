@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useContext } from "react"
+import { useState, useContext } from "react"
 import { useSession } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 import { WorkoutContext } from "@/app/contexts/workout-context"
@@ -25,8 +25,6 @@ export default function NewWorkoutModal({ choice, setChoice }) {
 
     const confirmWorkout = async () => {
 
-        
-
         try {
             const response = await fetch(`${WORKOUT_DATA}/daily-workout/new`, {
                 method: 'POST',
@@ -37,15 +35,12 @@ export default function NewWorkoutModal({ choice, setChoice }) {
             })
             const result = await response.json()
             setFinalWorkout(result)
+            router.push('/daily-workout')
         } catch (error) {
             console.log('could not send exercise choice over to backend', error)
         }
         closeModal()
     }
-
-    useEffect(() => {
-        if (finalWorkout !== null) router.push('/daily-workout')
-    }, [finalWorkout])
 
     return (
         <>

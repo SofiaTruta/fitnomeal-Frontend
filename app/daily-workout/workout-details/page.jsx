@@ -1,7 +1,7 @@
 
 'use client'
 import { useState, useContext, useEffect } from "react";
-import { WorkoutContext } from "@/app/contexts/workout-context"
+
 import { useSession } from "next-auth/react"
 import NavBar from "@/components/navbar/NavBar";
 import { useRouter } from 'next/navigation'
@@ -9,8 +9,7 @@ import Link from "next/link";
 
 export default function WorkoutDetails() {
   const router = useRouter()
-  // const { finalWorkout, setFinalWorkout } = useContext(WorkoutContext)
-  // console.log('final workout details page log', finalWorkout)
+  
   const [dailyWorkout, setDailyWorkout] = useState(null)
 
   const [showInstructions, setShowInstructions] = useState(false)
@@ -27,11 +26,11 @@ export default function WorkoutDetails() {
   const getDailyWorkout = async () => {
     //fetch workout details
     if (status === "authenticated") {
-      console.log('userEmail', userEmail)
+      
       try {
         const response = await fetch(`${DATABASE_CONNECTION}/daily-workout/get?userEmail=${userEmail}`)
         const result = await response.json()
-        console.log(result)
+      
         setDailyWorkout(result.exercises)
 
       } catch (error) {
@@ -67,8 +66,13 @@ export default function WorkoutDetails() {
   }
 
   useEffect(() => {
-    getDailyWorkout()
-  }, [status])
+    async function reload() {
+      await getDailyWorkout()
+    }
+
+    reload()
+    
+  }, [session])
 
 
   return (
