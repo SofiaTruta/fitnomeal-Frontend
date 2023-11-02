@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 import "./workoutHistory.css"; // Import the CSS file
 import { useRouter } from "next/navigation";
 
-
-
 export default function WorkoutHistoryPage() {
   const { data: session, status } = useSession();
   const [workoutHistory, setWorkoutHistory] = useState(null);
   const WORKOUT_DATA = process.env.NEXT_PUBLIC_BACKEND_CONNECTION;
   const router = useRouter();
 
+  // State to track whether the "See More" button has been clicked for each workout
+  const [expandedWorkouts, setExpandedWorkouts] = useState({});
 
   useEffect(() => {
     if (session) {
@@ -47,8 +47,7 @@ export default function WorkoutHistoryPage() {
         headers: {
           "Content-Type": "application/json",
         },
-      }
-      )
+      });
       setWorkoutHistory((prevWorkoutHistory) =>
         prevWorkoutHistory.filter((workout) => workout._id !== workoutId)
       );
@@ -67,7 +66,7 @@ export default function WorkoutHistoryPage() {
         },
         body: JSON.stringify({
           userId: session?.user?.email,
-          exercises: exercises
+          exercises: exercises,
         }),
       });
     } catch (error) {
@@ -75,6 +74,14 @@ export default function WorkoutHistoryPage() {
     }
     router.push("/daily-workout/workout-details");
   }
+
+  // Function to toggle the visibility of workout exercises
+  const toggleWorkoutVisibility = (workoutId) => {
+    setExpandedWorkouts((prevState) => ({
+      ...prevState,
+      [workoutId]: !prevState[workoutId],
+    }));
+  };
 
   return (
     <div>
@@ -94,23 +101,36 @@ export default function WorkoutHistoryPage() {
                 })}
               </p>
               <p className="text-gray-600">Status: {workout.status}</p>
-              <button className="btn btn-purple">
+              <button
+                className="btn btn-purple"
+                onClick={() => toggleWorkoutVisibility(workout._id)}
+              >
                 See More
               </button>
-              <button className="btn btn-purple" onClick={(() => deleteWorkoutHistory(workout._id))}>
+              {expandedWorkouts[workout._id] && (
+                <div>
+                  <p>Workout Exercises:</p>
+                  {workout.exercises.map((sWorkout, index) => (
+                    <div key={index} className="exercise-item">
+                      <p>{index + 1}. {sWorkout.name}</p>
+                      {index === workout.exercises.length - 1 && (
+                        <button
+                          className="btn btn-purple"
+                          onClick={() => retryWorkout(workout.exercises)}
+                        >
+                          Retry Workout
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+              <button
+                className="btn btn-purple"
+                onClick={() => deleteWorkoutHistory(workout._id)}
+              >
                 Delete Workout
               </button>
-              <p>Workout Exercises:</p>
-              {workout.exercises.map((sWorkout, index) => (
-                <div key={index} className="exercise-item">
-                  <p>{index + 1}. {sWorkout.name}</p>
-                  { index === workout.exercises.length - 1 && (
-                    <button className="btn btn-purple" onClick={(() => retryWorkout(workout.exercises))}>
-                      Retry Workout
-                    </button>
-                 )}
-                </div>
-              ))}
             </div>
           ))
         ) : (
@@ -118,6 +138,5 @@ export default function WorkoutHistoryPage() {
         )}
       </div>
     </div>
-  );
+  )
 }
-

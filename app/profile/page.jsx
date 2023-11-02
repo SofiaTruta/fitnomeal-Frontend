@@ -18,7 +18,6 @@ export default function Profile() {
     workoutGoal: 0,
   });
 
-
 const openModal = () => {
     setIsModalOpen(true)
 }
@@ -50,10 +49,29 @@ const closeModal = () => {
     }
   }, [session]);
 
-  function handleChange(evt) {
-    const newFormData = { ...formData, [evt.target.name]: evt.target.value };
-    setFormData(newFormData);
-    console.log(formData);
+  function handleChangeHeight(evt) {
+    setFormData({
+      ...formData,
+     height: evt.target.value
+    });
+  }
+  function handleChangeWeight(evt) {
+    setFormData({
+      ...formData,
+      weight: evt.target.value
+    });
+  }
+  function handleChangeWeightGoal(evt) {
+    setFormData({
+      ...formData,
+      goalWeight: evt.target.value
+    });
+  }
+  function handleChangeWorkoutGoal(evt) {
+    setFormData({
+      ...formData,
+      workoutGoal: evt.target.value
+    });
   }
 
   async function submitDetails() {
@@ -119,7 +137,6 @@ const closeModal = () => {
             disabled
             value={userData?.name}
             name="name"
-            onChange={handleChange}
             className="w-full bg-purple-100 p-2 rounded mt-2"
           />
           <label>Email</label>
@@ -128,43 +145,38 @@ const closeModal = () => {
             disabled
             value={userData?.email}
             name="email"
-            onChange={handleChange}
             className="w-full bg-purple-100 p-2 rounded mt-2"
           />
           <label>Height</label>
           <input
             type="number"
             placeholder={userData?.height}
-            value={formData.height}
             name="height"
-            onChange={handleChange}
+            onChange={handleChangeHeight}
             className="w-full bg-purple-100 p-2 rounded mt-2"
           />
           <label>Weight</label>
           <input
             type="number"
             placeholder={userData?.weight}
-            value={formData.weight}
             name="weight"
-            onChange={handleChange}
+            onChange={handleChangeWeight}
             className="w-full bg-purple-100 p-2 rounded mt-2"
           />
           <label>Weight Goal</label>
           <input
             type="number"
             placeholder={userData?.goalWeight}
-            value={formData.goalWeight}
             name="goalWeight"
-            onChange={handleChange}
+            onChange={handleChangeWeightGoal}
             className="w-full bg-purple-100 p-2 rounded mt-2"
           />
           <label>Workouts per week</label>
           <input
             type="number"
             placeholder={userData?.workoutGoal}
-            value={formData.workoutGoal}
             name="workoutGoal"
-            onChange={handleChange}
+            onChange={handleChangeWorkoutGoal}
             className="w-full bg-purple-100 p-2 rounded mt-2"
           />
           <button
