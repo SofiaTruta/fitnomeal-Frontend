@@ -1,34 +1,40 @@
 'use client'
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import NavBar from "@/components/navbar/NavBar";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWeightScale } from '@fortawesome/free-solid-svg-icons';
-import { GiWeightLiftingUp } from 'react-icons/gi'
+import { GiWeightLiftingUp } from 'react-icons/gi';
 import { GiProgression } from 'react-icons/gi';
 
-
-
 export default function Goals() {
-  // Hard-coded data for demonstration
-  const weeklyGoal = 5; // Number of workouts per week
-  const workoutsCompleted = 4; // Number of workouts completed
-  const currentWeight = 60; // Current weight in kg
-  const goalWeight = 80; // Goal weight in kg
 
-  // Calculate the percentage of workouts completed
-  const workoutsPercentage = (workoutsCompleted / weeklyGoal) * 100;
+  const [userWorkoutGoal, setUserWorkoutGoal] = useState(0); // Workout goal from the database
+  const [workoutsCompleted, setWorkoutsCompleted] = useState(0); 
 
-  // Calculate the weight gain progress
-  const weightProgress = ((currentWeight - 60) / (goalWeight - 60)) * 100;
 
-  // Define a message based on the workouts progress
-  let workoutsMessage = "Keep pushing, you can do it!";
-  if (workoutsCompleted >= weeklyGoal) {
-    workoutsMessage = "Well done! You did it!";
+  const [currentWeight, setCurrentWeight] = useState(null); // Current weight in kg
+  const [goalWeight, setGoalWeight] = useState(null); // Goal weight in kg
+
+  const workoutsPercentage = (workoutsCompleted / userWorkoutGoal) * 100;
+  const weightProgress = (currentWeight - goalWeight) < 0
+    ? ((currentWeight - 60) / (goalWeight - 60)) * 100
+    : ((goalWeight - currentWeight) / (goalWeight - 60)) * 100;
+
+  let progressMessage = "Keep pushing, you can do it!";
+  if (workoutsCompleted >= userWorkoutGoal) {
+    progressMessage = "Well done! You did it!";
   } else if (workoutsPercentage >= 50) {
-    workoutsMessage = "Almost there, keep pushing!";
+    progressMessage = "Almost there, keep pushing!";
   }
+
+  if ((currentWeight - goalWeight) < 0) {
+    progressMessage = "Keep gaining weight, you can do it!";
+  } else if ((currentWeight - goalWeight) > 0) {
+    progressMessage = "Keep losing weight, you can do it!";
+  }
+
   const { data: session, status } = useSession();
   const [weeklyWorkouts, setWeeklyWorkouts] = useState(0);
 
@@ -41,10 +47,11 @@ export default function Goals() {
       const oneWeekAgo = new Date();
       oneWeekAgo.setDate(currentDate.getDate() - 7);
 
-      async function fetchWeeklyWorkouts() {
+      async function fetchData() {
         try {
+          // Fetch user's current weight and goal weight from your API
           const response = await fetch(
-            `${WORKOUT_DATA}/workout-history/history/${email}`,
+            `${WORKOUT_DATA}/users/find/${email}`,
             {
               method: "GET",
               headers: {
@@ -55,20 +62,39 @@ export default function Goals() {
 
           const result = await response.json();
 
-          // Filter the workouts for the past week
-          const weeklyWorkoutsData = result.filter((workout) => {
+          if (result) {
+            setUserWorkoutGoal(result.workoutGoal);
+            setCurrentWeight(result.weight);
+            setGoalWeight(result.goalWeight);
+          } else {
+            console.error("User not found");
+          }
+
+          // Fetch and update the number of weekly workouts
+          const workoutsResponse = await fetch(
+            `${WORKOUT_DATA}/workout-history/history/${email}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+
+          const workoutsResult = await workoutsResponse.json();
+
+          const weeklyWorkoutsData = workoutsResult.filter((workout) => {
             const workoutDate = new Date(workout.date);
             return workoutDate >= oneWeekAgo && workoutDate <= currentDate;
           });
 
-          // Update the state with the number of weekly workouts
           setWeeklyWorkouts(weeklyWorkoutsData.length);
         } catch (error) {
-          console.log("User not found", error);
+          console.error("Error fetching data", error);
         }
       }
 
-      fetchWeeklyWorkouts(); // Call the function to fetch user data
+      fetchData();
     }
   }, [session]);
 
@@ -89,34 +115,48 @@ export default function Goals() {
 
           <div className="progressBarContainer">
             <progress value={workoutsPercentage} max="100"></progress>
-            <p className="progressMessage">{workoutsMessage}</p>
+            <p className="progressMessage">{progressMessage}</p>
           </div>
           <p className="progressDetails">
-            Your goal: {weeklyGoal} workouts per week
+            Your goal: {userWorkoutGoal} workouts per week
             <br />
             Workouts completed: {workoutsCompleted}
           </p>
         </div>
 
         <div className="section">
-          
-          <h2>Weight Gain Progress</h2>
-            <div className="weightIcon">
+          <h2>Weight Progress</h2>
+          <div className="weightIcon">
             <FontAwesomeIcon icon={faWeightScale} size="2x" color="purple" />
           </div>
           <div className="progressBarContainer">
             <progress value={weightProgress} max="100"></progress>
-            </div>
-            <div>
+          </div>
+          <div>
             <p className="progressDetails">
-              Your current weight: {currentWeight} kg
-              <br />
-              Your goal weight: {goalWeight} kg
-              <br />
-              {goalWeight - currentWeight} kg more to gain till you reach your goal
+              {currentWeight > goalWeight ? (
+                <span>
+                  Your current weight: {currentWeight} kg
+                  <br />
+                  Your goal weight: {goalWeight} kg
+                  <br />
+                  {currentWeight - goalWeight} kg more to lose till you reach your goal
+                </span>
+              ) : (
+                <span>
+                  Your current weight: {currentWeight} kg
+                  <br />
+                  Your goal weight: {goalWeight} kg
+                  <br />
+                  {goalWeight - currentWeight} kg more to gain till you reach your goal
+                </span>
+              )}
             </p>
           </div>
         </div>
+      <Link href="/profile">
+        <button className="btn btn-purple">Edit goals</button>
+      </Link>
       </div>
     </div>
   );

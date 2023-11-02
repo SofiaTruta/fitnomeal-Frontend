@@ -70,6 +70,7 @@ const closeModal = () => {
           weight: formData.weight,
           height: formData.height,
           goalWeight: formData.goalWeight,
+          workoutGoal: formData.workoutGoal,
         }),
       });
   
@@ -80,6 +81,7 @@ const closeModal = () => {
           weight: formData.weight,
           height: formData.height,
           goalWeight: formData.goalWeight,
+          workoutGoal: formData.workoutGoal,
         }));
       } else {
         console.log("Error updating user data");
@@ -91,73 +93,98 @@ const closeModal = () => {
   
 
   return (
-   <div>
+    <div className="bg-purple-50 min-h-screen text-color-dark">
     <NavBar />
-    <div className="profile-container">
-      <h1 className="profile-heading">Profile page</h1>
-      {userData && (
-        <div className="user-details">
-          <h2 className="details-heading">Details</h2>
-          <p>Name: {userData.name}</p>
-          <p>Email: {userData.email}</p>
-          <p>Height: {userData.height} Cm</p>
-          <p>Weight: {userData.weight} Kg</p>
-          <h2 className="details-heading">Goals</h2>
-          <p>Goal Weight: {userData.goalWeight} Kg</p>
+    <div className="p-4">
+      <h1 className="text-4xl font-bold text-center mb-4">Profile Page</h1>
+      <div className="flex flex-wrap">
+        <div className="w-full sm:w-1/2 p-2">
+          <h2 className="text-2xl mb-2">Details</h2>
+          <p>Name: {userData?.name}</p>
+          <p>Email: {userData?.email}</p>
+          <p>Height: {userData?.height}</p>
+          <p>Weight: {userData?.weight}</p>
         </div>
-      )}
+        <div className="w-full sm:w-1/2 p-2 bg-pink-100 rounded-lg">
+          <div className="bg-dark-pink p-4">
+            <h2 className="text-2xl mb-2">Goals</h2>
+            <p>Goal Weight: {userData?.goalWeight}</p>
+            <p>Workout Goal: {userData?.workoutGoal} times a week</p>
+          </div>
+        </div>
+      </div>
       {displayForm && (
-        <div className="user-form">
+        <div className="p-4">
           <label>Name</label>
           <input
             type="text"
             disabled
-            value={userData.name}
+            value={userData?.name}
             name="name"
             onChange={handleChange}
+            className="w-full bg-purple-100 p-2 rounded mt-2"
           />
           <label>Email</label>
           <input
             type="text"
             disabled
-            value={userData.email}
+            value={userData?.email}
             name="email"
             onChange={handleChange}
+            className="w-full bg-purple-100 p-2 rounded mt-2"
           />
           <label>Height</label>
           <input
             type="number"
-            placeholder={userData.height}
+            placeholder={userData?.height}
             value={formData.height}
             name="height"
             onChange={handleChange}
+            className="w-full bg-purple-100 p-2 rounded mt-2"
           />
           <label>Weight</label>
           <input
             type="number"
-            placeholder={userData.weight}
+            placeholder={userData?.weight}
             value={formData.weight}
             name="weight"
             onChange={handleChange}
+            className="w-full bg-purple-100 p-2 rounded mt-2"
           />
           <label>Weight Goal</label>
           <input
             type="number"
-            placeholder={userData.goalWeight}
+            placeholder={userData?.goalWeight}
             value={formData.goalWeight}
             name="goalWeight"
             onChange={handleChange}
+            className="w-full bg-purple-100 p-2 rounded mt-2"
           />
-          <button onClick={submitDetails} className="submit-button">
+          <label>Workouts per week</label>
+          <input
+            type="number"
+            placeholder={userData?.workoutGoal}
+            value={formData.workoutGoal}
+            name="workoutGoal"
+            onChange={handleChange}
+            className="w-full bg-purple-100 p-2 rounded mt-2"
+          />
+          <button
+            onClick={submitDetails}
+            className="w-full bg-purple-700 text-white p-2 rounded mt-4"
+          >
             Submit Details
           </button>
         </div>
       )}
-      <button className="edit-button" onClick={() => setDisplayForm(!displayForm)}>
-        Edit Details/Close
+      <button
+        onClick={() => setDisplayForm(!displayForm)}
+        className="bg-purple-700 hover:bg-purple-800 text-white p-2 rounded mt-4"
+      >
+        Edit Details
       </button>
+      <ThankYouModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} openModal={openModal} closeModal={closeModal} />
     </div>
-    <ThankYouModal openModal={openModal} closeModal={closeModal} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
   </div>
   )
 }

@@ -17,6 +17,7 @@ export default function FirstLogin() {
     weight: null,
     height: null,
     goalWeight: null,
+    workoutGoal: null
   });
 
   function handleChange(evt) {
@@ -40,6 +41,7 @@ export default function FirstLogin() {
           weight: formData.weight,
           height: formData.height,
           goalWeight: formData.goalWeight,
+          workoutGoal: formData.workoutGoal,
           firstLogin: "false",
         }),
       });
@@ -96,6 +98,15 @@ export default function FirstLogin() {
         placeholder="Kg"
         value={formData.goalWeight}
         name="goalWeight"
+        onChange={handleChange}
+      />
+       <label className="form-label">Workouts per week</label>
+      <input
+        className="form-input"
+        type="number"
+        placeholder="3"
+        value={formData.workoutGoal}
+        name="workoutGoal"
         onChange={handleChange}
       />
       <button className="btn btn-pink:hover btn-purple" onClick={submitDetails}>
