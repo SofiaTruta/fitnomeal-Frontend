@@ -11,32 +11,31 @@ import { GiProgression } from 'react-icons/gi';
 export default function Goals() {
 
   const [userWorkoutGoal, setUserWorkoutGoal] = useState(0); // Workout goal from the database
-  const [workoutsCompleted, setWorkoutsCompleted] = useState(0); 
+  const [weeklyWorkouts, setWeeklyWorkouts] = useState(0); 
 
 
   const [currentWeight, setCurrentWeight] = useState(null); // Current weight in kg
   const [goalWeight, setGoalWeight] = useState(null); // Goal weight in kg
 
-  const workoutsPercentage = (workoutsCompleted / userWorkoutGoal) * 100;
+  const workoutsPercentage = (weeklyWorkouts / userWorkoutGoal) * 100;
   const weightProgress = (currentWeight - goalWeight) < 0
     ? ((currentWeight - 60) / (goalWeight - 60)) * 100
     : ((goalWeight - currentWeight) / (goalWeight - 60)) * 100;
 
   let progressMessage = "Keep pushing, you can do it!";
-  if (workoutsCompleted >= userWorkoutGoal) {
+  if (weeklyWorkouts >= userWorkoutGoal) {
     progressMessage = "Well done! You did it!";
   } else if (workoutsPercentage >= 50) {
     progressMessage = "Almost there, keep pushing!";
   }
 
   if ((currentWeight - goalWeight) < 0) {
-    progressMessage = "Keep gaining weight, you can do it!";
+    progressMessage = "Keep going, you can do it!";
   } else if ((currentWeight - goalWeight) > 0) {
-    progressMessage = "Keep losing weight, you can do it!";
+    progressMessage = "Keep going, you can do it!";
   }
 
   const { data: session, status } = useSession();
-  const [weeklyWorkouts, setWeeklyWorkouts] = useState(0);
 
   const WORKOUT_DATA = process.env.NEXT_PUBLIC_BACKEND_CONNECTION;
 
@@ -120,7 +119,7 @@ export default function Goals() {
           <p className="progressDetails">
             Your goal: {userWorkoutGoal} workouts per week
             <br />
-            Workouts completed: {workoutsCompleted}
+            Workouts completed: {weeklyWorkouts}
           </p>
         </div>
 
