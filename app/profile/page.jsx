@@ -88,44 +88,88 @@ const closeModal = () => {
   }
 
   return (
-    <div style={{ margin: "20px", padding: "10px", backgroundColor: "#f5f5f5" }}>
-      <NavBar></NavBar>
-      <h1 style={{ fontSize: "24px", marginBottom: "10px" }}>Profile page</h1>
-
-      {userData && (
-        <div style={{ margin: "10px", padding: "10px" }}>
-           <h2 style={{ fontSize: "20px", marginBottom: "5px" }}>Details</h2>
-          <p>Name: {userData.name}</p>
-          <p>Email: {userData.email}</p>
-          <p>Height: {userData.height}</p>
-          <p>Weight: {userData.weight}</p>
-          <h2 style={{ fontSize: "20px", marginBottom: "5px" }}>Goals</h2>
-          <p>Goal Weight: {userData.goalWeight}</p>
+    <div className="bg-purple-50 min-h-screen text-color-dark">
+      <NavBar />
+      <div className="p-4">
+        <h1 className="text-4xl font-bold text-center mb-4">Profile Page</h1>
+        <div className="flex flex-wrap">
+          <div className="w-full sm:w-1/2 p-2">
+            <h2 className="text-2xl mb-2">Details</h2>
+            <p>Name: {userData?.name}</p>
+            <p>Email: {userData?.email}</p>
+            <p>Height: {userData?.height}</p>
+            <p>Weight: {userData?.weight}</p>
           </div>
-      )}
-          {/* Conditional rendering of the form */}
-          {displayForm && (
-            <div style={{ margin: "10px", padding: "10px" }}>
-              {/* Form elements for user input */}
-              <label>Name</label> <input type="text" disabled value={userData.name} name="name" onChange={handleChange} />
-              <label>Email</label> <input type="text" disabled value={userData.email} name="email" onChange={handleChange} />
-              <label>Height </label> <input type="number" placeholder={userData.height} value={formData.height} name="height" onChange={handleChange} />
-              <label>Weight </label> <input type="number" placeholder={userData.weight}value={formData.weight} name="weight" onChange={handleChange} />
-              <label>Weight Goal </label> <input type="number" placeholder={userData.goalWeight} value={formData.goalWeight} name="goalWeight" onChange={handleChange} />
-              <button onClick={submitDetails}>Submit Details</button>
-              <button
-            onClick={submitDetails}
-            data-modal-target="default-modal"
-            data-modal-toggle="default-modal"
-            className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            type="button">
-            Submit details
-        </button>
+          <div className="w-full sm:w-1/2 p-2 bg-pink-100 rounded-lg">
+            <div className="bg-dark-pink p-4 ">
+              <h2 className="text-2xl mb-2">Goals</h2>
+              <p>Goal Weight: {userData?.goalWeight}</p>
+              <p>Workout Goal: 3 times a week</p>
             </div>
-          )}
-
-          {/* Toggle button to show/hide the form */}
-          <button className="btn-pink:hover .text-color-dark" onClick={() => setDisplayForm(!displayForm)}>Edit Details</button>
-          <ThankYouModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} openModal={openModal} closeModal={closeModal}/>
+          </div>
         </div>
+        {displayForm && (
+          <div className="p-4">
+            <label>Name</label>
+            <input
+              type="text"
+              disabled
+              value={userData?.name}
+              name="name"
+              onChange={handleChange}
+              className="w-full bg-purple-100 p-2 rounded mt-2"
+            />
+            <label>Email</label>
+            <input
+              type="text"
+              disabled
+              value={userData?.email}
+              name="email"
+              onChange={handleChange}
+              className="w-full bg-purple-100 p-2 rounded mt-2"
+            />
+            <label>Height</label>
+            <input
+              type="number"
+              placeholder={userData?.height}
+              value={formData.height}
+              name="height"
+              onChange={handleChange}
+              className="w-full bg-purple-100 p-2 rounded mt-2"
+            />
+            <label>Weight</label>
+            <input
+              type="number"
+              placeholder={userData?.weight}
+              value={formData.weight}
+              name="weight"
+              onChange={handleChange}
+              className="w-full bg-purple-100 p-2 rounded mt-2"
+            />
+            <label>Weight Goal</label>
+            <input
+              type="number"
+              placeholder={userData?.goalWeight}
+              value={formData.goalWeight}
+              name="goalWeight"
+              onChange={handleChange}
+              className="w-full bg-purple-100 p-2 rounded mt-2"
+            />
+            <button
+              onClick={submitDetails}
+              className="w-full bg-purple-700 text-white p-2 rounded mt-4"
+            >
+              Submit Details
+            </button>
+          </div>
+        )}
+        <button
+          onClick={() => setDisplayForm(!displayForm)}
+          className="bg-purple-700 hover:bg-purple-800 text-white p-2 rounded mt-4"
+        >
+          Edit Details
+        </button>
+        <ThankYouModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} openModal={openModal} closeModal={closeModal} />
+      </div>
+    </div>
   )} 
