@@ -5,12 +5,14 @@ import { useRouter } from 'next/navigation';
 import { useSession } from "next-auth/react";
 import NewWorkoutModal from '@/components/newWorkoutModal/NewWorkoutModal';
 import NavBar from '@/components/navbar/NavBar';
+import { GiMuscleUp } from 'react-icons/gi';
+
 
 export default function DailyWorkoutsPage() {
   const { finalWorkout, setFinalWorkout } = useContext(WorkoutContext)
   const [choice, setChoice] = useState('Full Body')
 
-
+  console.log(finalWorkout);
   const { data: session, status } = useSession()
   const userEmail = session?.user?.email
 
@@ -19,7 +21,7 @@ export default function DailyWorkoutsPage() {
   const router = useRouter()
 
   async function handleSave() {
-    
+    router.push("daily-workout/workout-details")
     try {
       await fetch(`${WORKOUT_DATA}/daily-workout/newWorkout`, {
         method: 'POST',
@@ -31,30 +33,38 @@ export default function DailyWorkoutsPage() {
           exercises: finalWorkout,
         })
       })
-      router.push("daily-workout/workout-details")
     } catch (error) {
       console.log('could not send exercise choice over to backend', error)
     }
   }
 
   const Workouts = finalWorkout.map((workout, index) => (
-    <div key={workout._id} style={{ backgroundColor: "#f5f5f5", margin: "10px", padding: "10px" }}>
-      <h2 style={{ fontSize: "18px", marginBottom: "5px" }}>{index + 1}. {workout.name}</h2>
+    <div key={workout._id} className="bg-pink-100 rounded-lg shadow-lg p-4 m-4">
+      <GiMuscleUp size={20} color="purple" />
+      <h2 className="text-xl font-semibold mb-2">{index + 1}. Exercise: {workout.name}</h2>
+      <h2 className="text-base text-gray-600">Target Muscle: {workout.target}</h2>
     </div>
   ));
+  
   return (
-    <div>
-        <NavBar/>
-      <h1 style={{ fontSize: "24px", marginBottom: "10px" }}>Daily Workouts</h1>
-      <ul>
+      <div className=''>
+      <NavBar />
+      <h1 className="text-2xl font-semibold mb-4">How about these workouts?</h1>
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {Workouts}
       </ul>
-      <h3 style={{ fontSize: "16px" }}>Happy with this workout</h3>
-      <button style={{ fontSize: "16px", backgroundColor: "#8763c4", color: "#fff", padding: "5px 10px", border: "none", borderRadius: "4px" }} onClick={handleSave}>Click Me</button>
-      <h3 style={{ fontSize: "16px" }}>Want another one?</h3>
-      <NewWorkoutModal choice={choice} setChoice={setChoice}/>
+      <div className='flex flex-col sm:flex-row justify-between items-center'>
+      <h3 className="text-xl font-semibold my-4 ">Happy with this workout?</h3>
+      <button
+        className="btn btn-purple px-4 py-2 rounded-md sm:my-0 my-4"
+        onClick={handleSave}
+      >
+        Begin
+      </button>
+      <h3 className="text-xl font-semibold my-4">Or</h3>
+      <NewWorkoutModal choice={choice} setChoice={setChoice} />
     </div>
-  );
+    </div>   
+  )
 }
-
-
+                      

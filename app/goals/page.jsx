@@ -99,8 +99,8 @@ export default function Goals() {
 
   return (
     <div>
-      <div className="container">
         <NavBar />
+      <div className="bg-purple-100">
         <h1 className="pageTitle">Goals page</h1>
         <div className="section">
           <h2>Your Weekly Workouts</h2>
