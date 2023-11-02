@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import NavBar from "@/components/navbar/NavBar";
 import ThankYouModal from "@/components/thankYouModal/ThankYouModal";
+import '../profile/profile.css'
 
 export default function Profile() {
   const [displayForm, setDisplayForm] = useState(false);
@@ -11,9 +12,9 @@ export default function Profile() {
   const [userData, setUserData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [formData, setFormData] = useState({
-    weight: {},
-    height: {},
-    goalWeight: {},
+    weight: 0,
+    height: 0,
+    goalWeight: 0,
   });
 
 
@@ -55,22 +56,11 @@ const closeModal = () => {
   }
 
   async function submitDetails() {
-    openModal()
-    setDisplayForm(false)
-    setUserData({
-      name: userData.name,
-      email: userData.email,
-      weight: userData.weight ,
-      height: userData.height,
-      goalWeight: userData.goalWeight,
-    })
-    setFormData({
-      height: userData.height,
-      weight: userData.weight,
-      goalWeight: userData.goalWeight
-    })
+    openModal();
+    setDisplayForm(false);
+  
     try {
-      await fetch(`${WORKOUT_DATA}/users/update`, {
+      const response = await fetch(`${WORKOUT_DATA}/users/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -82,94 +72,90 @@ const closeModal = () => {
           goalWeight: formData.goalWeight,
         }),
       });
+  
+      if (response.ok) {
+        // Update the user data state with the new values
+        setUserData((prevUserData) => ({
+          ...prevUserData,
+          weight: formData.weight,
+          height: formData.height,
+          goalWeight: formData.goalWeight,
+        }));
+      } else {
+        console.log("Error updating user data");
+      }
     } catch (error) {
-      console.log("error sending form data", error);
+      console.log("Error sending form data", error);
     }
   }
+  
 
   return (
-    <div className="bg-purple-50 min-h-screen text-color-dark">
-      <NavBar />
-      <div className="p-4">
-        <h1 className="text-4xl font-bold text-center mb-4">Profile Page</h1>
-        <div className="flex flex-wrap">
-          <div className="w-full sm:w-1/2 p-2">
-            <h2 className="text-2xl mb-2">Details</h2>
-            <p>Name: {userData?.name}</p>
-            <p>Email: {userData?.email}</p>
-            <p>Height: {userData?.height}</p>
-            <p>Weight: {userData?.weight}</p>
-          </div>
-          <div className="w-full sm:w-1/2 p-2 bg-pink-100 rounded-lg">
-            <div className="bg-dark-pink p-4 ">
-              <h2 className="text-2xl mb-2">Goals</h2>
-              <p>Goal Weight: {userData?.goalWeight}</p>
-              <p>Workout Goal: 3 times a week</p>
-            </div>
-          </div>
+   <div>
+    <NavBar />
+    <div className="profile-container">
+      <h1 className="profile-heading">Profile page</h1>
+      {userData && (
+        <div className="user-details">
+          <h2 className="details-heading">Details</h2>
+          <p>Name: {userData.name}</p>
+          <p>Email: {userData.email}</p>
+          <p>Height: {userData.height} Cm</p>
+          <p>Weight: {userData.weight} Kg</p>
+          <h2 className="details-heading">Goals</h2>
+          <p>Goal Weight: {userData.goalWeight} Kg</p>
         </div>
-        {displayForm && (
-          <div className="p-4">
-            <label>Name</label>
-            <input
-              type="text"
-              disabled
-              value={userData?.name}
-              name="name"
-              onChange={handleChange}
-              className="w-full bg-purple-100 p-2 rounded mt-2"
-            />
-            <label>Email</label>
-            <input
-              type="text"
-              disabled
-              value={userData?.email}
-              name="email"
-              onChange={handleChange}
-              className="w-full bg-purple-100 p-2 rounded mt-2"
-            />
-            <label>Height</label>
-            <input
-              type="number"
-              placeholder={userData?.height}
-              value={formData.height}
-              name="height"
-              onChange={handleChange}
-              className="w-full bg-purple-100 p-2 rounded mt-2"
-            />
-            <label>Weight</label>
-            <input
-              type="number"
-              placeholder={userData?.weight}
-              value={formData.weight}
-              name="weight"
-              onChange={handleChange}
-              className="w-full bg-purple-100 p-2 rounded mt-2"
-            />
-            <label>Weight Goal</label>
-            <input
-              type="number"
-              placeholder={userData?.goalWeight}
-              value={formData.goalWeight}
-              name="goalWeight"
-              onChange={handleChange}
-              className="w-full bg-purple-100 p-2 rounded mt-2"
-            />
-            <button
-              onClick={submitDetails}
-              className="w-full bg-purple-700 text-white p-2 rounded mt-4"
-            >
-              Submit Details
-            </button>
-          </div>
-        )}
-        <button
-          onClick={() => setDisplayForm(!displayForm)}
-          className="bg-purple-700 hover:bg-purple-800 text-white p-2 rounded mt-4"
-        >
-          Edit Details
-        </button>
-        <ThankYouModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} openModal={openModal} closeModal={closeModal} />
-      </div>
+      )}
+      {displayForm && (
+        <div className="user-form">
+          <label>Name</label>
+          <input
+            type="text"
+            disabled
+            value={userData.name}
+            name="name"
+            onChange={handleChange}
+          />
+          <label>Email</label>
+          <input
+            type="text"
+            disabled
+            value={userData.email}
+            name="email"
+            onChange={handleChange}
+          />
+          <label>Height</label>
+          <input
+            type="number"
+            placeholder={userData.height}
+            value={formData.height}
+            name="height"
+            onChange={handleChange}
+          />
+          <label>Weight</label>
+          <input
+            type="number"
+            placeholder={userData.weight}
+            value={formData.weight}
+            name="weight"
+            onChange={handleChange}
+          />
+          <label>Weight Goal</label>
+          <input
+            type="number"
+            placeholder={userData.goalWeight}
+            value={formData.goalWeight}
+            name="goalWeight"
+            onChange={handleChange}
+          />
+          <button onClick={submitDetails} className="submit-button">
+            Submit Details
+          </button>
+        </div>
+      )}
+      <button className="edit-button" onClick={() => setDisplayForm(!displayForm)}>
+        Edit Details/Close
+      </button>
     </div>
-  )} 
+    <ThankYouModal openModal={openModal} closeModal={closeModal} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
+  </div>
