@@ -107,6 +107,16 @@ const closeModal = () => {
     }
   }
   
+  function bmi() {
+    const height2 = (userData?.height * userData?.height) 
+    const height = (height2 / 10000)
+    const height3 = height.toFixed(2)
+    const bmi =  (userData?.weight / height3 )
+    const finalBmi = bmi.toFixed(2)
+    return finalBmi
+  }
+  
+  const finalBmi = bmi()
 
   return (
     <div className="bg-purple-100 min-h-screen text-color-dark">
@@ -120,6 +130,7 @@ const closeModal = () => {
           <p>Email: {userData?.email}</p>
           <p>Height: {userData?.height}</p>
           <p>Weight: {userData?.weight}</p>
+          <p>BMI: {finalBmi}</p>
         </div>
         <div className="w-full sm:w-1/2 p-2 bg-pink-100 rounded-lg">
           <div className="bg-dark-pink p-4">
