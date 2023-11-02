@@ -159,3 +159,5 @@ const closeModal = () => {
     </div>
     <ThankYouModal openModal={openModal} closeModal={closeModal} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}/>
   </div>
+  )
+}
