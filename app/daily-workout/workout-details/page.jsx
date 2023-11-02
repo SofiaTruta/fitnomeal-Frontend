@@ -70,7 +70,7 @@ export default function WorkoutDetails() {
 
     reload()
 
-  }, [session])
+  },[session])
 
 
   return (

@@ -21,7 +21,6 @@ export default function DailyWorkoutsPage() {
   const router = useRouter()
 
   async function handleSave() {
-    router.push("daily-workout/workout-details")
     try {
       await fetch(`${WORKOUT_DATA}/daily-workout/newWorkout`, {
         method: 'POST',
@@ -36,6 +35,7 @@ export default function DailyWorkoutsPage() {
     } catch (error) {
       console.log('could not send exercise choice over to backend', error)
     }
+    router.push("daily-workout/workout-details")
   }
 
   const Workouts = finalWorkout.map((workout, index) => (
