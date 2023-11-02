@@ -45,7 +45,7 @@
   }
   
   .pageTitle {
-    color: #6a0dad; 
+    color: #27284a; 
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
@@ -90,36 +90,3 @@
   }
   
 
-@keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-20px); /* Initial position for a fly-in effect */
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes pulse {
-    0%, 100% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1); /* Pulsating effect */
-    }
-  }
-  
-.section.animated {
-    opacity: 0;
-    animation-fill-mode: forwards;
-  }
-  
-  .animated.fadeIn {
-    animation: fadeIn 0.5s ease-out; /* Adjust the duration and easing as needed */
-  }
-  
-  .animated.pulse {
-    animation: pulse 1s infinite; /* Adjust the duration and effects as needed */
-  }
-  
