@@ -4,6 +4,8 @@ import NavBar from "@/components/navbar/NavBar";
 import { useEffect, useState } from "react";
 import "./workoutHistory.css"; // Import the CSS file
 
+
+
 export default function WorkoutHistoryPage() {
   const { data: session, status } = useSession();
   const [workoutHistory, setWorkoutHistory] = useState(null);
@@ -56,39 +58,39 @@ export default function WorkoutHistoryPage() {
 
   return (
     <div>
-      <NavBar />
-      <div className="workout-history-container">
-        <h1 className="page-heading">Workout History Page</h1>
-        {workoutHistory &&
-          workoutHistory.map((workout, index) => (
-            <div key={workout._id} className="workout-card">
-              <p className="workout-date">
-                Date: {new Date(workout.date).toLocaleDateString()}
-              </p>
-              <p className="workout-status">Status: {workout.status}</p>
-              <div className="exercise-list">
-                <p>Workout Steps:</p>
+    <NavBar workout={workoutHistory} />
+    <h1 className="text-3xl font-semibold mb-4">Workout History</h1>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      {workoutHistory ? (
+        workoutHistory.map((workout, index) => (
+          <div key={workout._id} className="bg-white shadow-lg rounded p-4">
+            <p className="text-lg font-semibold">
+              Date:{" "}
+              {new Date(workout.date).toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+            <p>Status: {workous.status}</p>
+            <p className="text-gray-600">Status: {workout.status}</p>
+            <button className="btn btn-purple">
+              See More
+            </button>
+             <p>Workout Steps:</p>
                 {workout.exercises.map((sWorkout, index) => (
                   <div key={index} className="exercise-item">
                     <p>{index + 1}. {sWorkout.name}</p>
                   </div>
                 ))}
-              </div>
-              <button className="btn deleteButton"
-                onClick={(() =>
-                  deleteWorkoutHistory(workout._id)
-                )}>DELETE</button>
-            </div>
-          ))}
-      </div>
-      {workoutHistory && workoutHistory.length > 0 ? (
-        workoutHistory.map((workout, index) => (
-          <div></div>
-      ))
+          </div>
+        ))
       ) : (
         <h2 className="workout">No workouts added yet!</h2>
       )} 
     </div>
+  </div>
   );
 }
 

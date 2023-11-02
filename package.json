@@ -9,13 +9,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.0.15",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "chart.js": "^4.4.0",
     "flowbite": "^2.0.0",
     "flowbite-react": "^0.6.4",
     "next": "^14.0.0",
     "next-auth": "^4.24.4",
+    "next-fonts": "^1.5.1",
     "react": "^18",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18",
+    "react-fontawesome": "^1.7.1",
     "react-google-button": "^0.7.2",
+    "react-icons": "^4.11.0",
     "react-router-dom": "^6.18.0"
   },
   "devDependencies": {
