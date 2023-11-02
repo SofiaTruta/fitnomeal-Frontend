@@ -100,7 +100,7 @@ export default function WorkoutHistoryPage() {
               <button className="btn btn-purple" onClick={(() => deleteWorkoutHistory(workout._id))}>
                 Delete Workout
               </button>
-              <p>Workout Steps:</p>
+              <p>Workout Exercises:</p>
               {workout.exercises.map((sWorkout, index) => (
                 <div key={index} className="exercise-item">
                   <p>{index + 1}. {sWorkout.name}</p>
