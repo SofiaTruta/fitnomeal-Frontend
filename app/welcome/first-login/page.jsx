@@ -13,11 +13,11 @@ export default function FirstLogin() {
 
   const [formData, setFormData] = useState({
     name: userName,
-    email: userEmail,       
-    weight: null,
-    height: null,
-    goalWeight: null,
-    workoutGoal: null
+    email: userEmail,
+    weight: 0,
+    height: 0,
+    goalWeight: 0,
+    workoutGoal: 0
   });
 
   function handleChange(evt) {
@@ -27,10 +27,8 @@ export default function FirstLogin() {
   }
 
   async function submitDetails() {
-    router.push("/");
-
     try {
-      await fetch(`${WORKOUT_DATA}/users/update`, {
+      const response = await fetch(`${WORKOUT_DATA}/users/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -45,74 +43,80 @@ export default function FirstLogin() {
           firstLogin: "false",
         }),
       });
+      if (response.ok) {
+        router.push("/");
+      }
+
     } catch (error) {
       console.log("error sending form data", error);
     }
   }
 
   return (
-    <div>
-      <h1 className="signUp">Additional SignUp Details</h1>
-    <div className="form-container">
-      <label className="form-label">Name</label>
-      <input
-        disabled
-        className="form-input"
-        type="text"
-        value={userName}
-        name="name"
-        onChange={handleChange}
-      />
-      <label className="form-label">Email</label>
-      <input
-        disabled
-        className="form-input"
-        type="text"
-        value={userEmail}
-        name="email"
-        onChange={handleChange}
-      />
-       <label className="form-label">Height</label>
-      <input
-        className="form-input"
-        type="number"
-        placeholder="CM"
-        value={formData.height}
-        name="height"
-        onChange={handleChange}
-      />
-      <label className="form-label"></label>
-      <label className="form-label">Weight</label>
-      <input
-        className="form-input"
-        type="number"
-        placeholder="Kg"
-        value={formData.weight}
-        name="weight"
-        onChange={handleChange}
-      />
-      <label className="form-label">Goal weight</label>
-      <input
-        className="form-input"
-        type="number"
-        placeholder="Kg"
-        value={formData.goalWeight}
-        name="goalWeight"
-        onChange={handleChange}
-      />
-       <label className="form-label">Workouts per week</label>
-      <input
-        className="form-input"
-        type="number"
-        placeholder="3"
-        value={formData.workoutGoal}
-        name="workoutGoal"
-        onChange={handleChange}
-      />
-      <button className="btn btn-pink:hover btn-purple" onClick={submitDetails}>
-        Submit Details
-      </button>
-    </div>
+    <div className="flex flex-col justify-center items-center h-screen">
+      <h1 className="text-center text-4xl font-extrabold signUp">Tell us more about yourself</h1>
+      <div className="form-container">
+        <label className="form-label">Name</label>
+        <input
+          disabled
+          className="form-input"
+          type="text"
+          value={userName}
+          name="name"
+          onChange={handleChange}
+        />
+        <label className="form-label">Email</label>
+        <input
+          disabled
+          className="form-input"
+          type="text"
+          value={userEmail}
+          name="email"
+          onChange={handleChange}
+        />
+        <label className="form-label">Height</label>
+        <input
+          className="form-input"
+          type="number"
+          placeholder="CM"
+          value={formData.height}
+          name="height"
+          onChange={handleChange}
+        />
+        <label className="form-label"></label>
+        <label className="form-label">Weight</label>
+        <input
+          className="form-input"
+          type="number"
+          placeholder="Kg"
+          value={formData.weight}
+          name="weight"
+          onChange={handleChange}
+        />
+        <label className="form-label">Goal weight</label>
+        <input
+          className="form-input"
+          type="number"
+          placeholder="Kg"
+          value={formData.goalWeight}
+          name="goalWeight"
+          onChange={handleChange}
+        />
+        <label className="form-label">Workouts per week</label>
+        <input
+          className="form-input"
+          type="number"
+          placeholder="3"
+          value={formData.workoutGoal}
+          name="workoutGoal"
+          onChange={handleChange}
+        />
+        <div className="flex flex-col justify-center items-center">
+        <button className="btn btn-pink:hover btn-purple mt-4" onClick={submitDetails}>
+          Submit Details
+        </button>
+        </div>
+      </div>
     </div>
   );
 }
