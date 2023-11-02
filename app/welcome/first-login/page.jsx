@@ -50,6 +50,7 @@ export default function FirstLogin() {
     } catch (error) {
       console.log("error sending form data", error);
     }
+    router.push("/");
   }
 
   return (
