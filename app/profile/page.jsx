@@ -15,6 +15,7 @@ export default function Profile() {
     weight: 0,
     height: 0,
     goalWeight: 0,
+    workoutGoal: 0,
   });
 
 
@@ -50,7 +51,7 @@ const closeModal = () => {
   }, [session]);
 
   function handleChange(evt) {
-    const newFormData = { ...formData, [evt.target.name]: [evt.target.value] };
+    const newFormData = { ...formData, [evt.target.name]: evt.target.value };
     setFormData(newFormData);
     console.log(formData);
   }
