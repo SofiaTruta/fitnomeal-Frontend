@@ -73,7 +73,7 @@ export default function WorkoutHistoryPage() {
                 day: "numeric",
               })}
             </p>
-            <p>Status: {workous.status}</p>
+            <p>Status: {workout.status}</p>
             <p className="text-gray-600">Status: {workout.status}</p>
             <button className="btn btn-purple">
               See More
