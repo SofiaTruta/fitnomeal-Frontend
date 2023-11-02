@@ -122,9 +122,9 @@ const closeModal = () => {
     <div className="bg-purple-100 min-h-screen text-color-dark">
     <NavBar />
     <div className="p-4">
-      <h1 className="text-4xl font-bold text-center mb-4">Profile Page</h1>
-      <div className="flex flex-wrap">
-        <div className="w-full sm:w-1/2 p-2">
+      <h1 className="text-4xl font-bold text-center mt-8 mb-8">Profile Page</h1>
+      <div className="flex flex-wrap justify-center">
+        <div className="bg-white rounded-lg shadow-md p-4">
           <h2 className="text-2xl mb-2">Details</h2>
           <p>Name: {userData?.name}</p>
           <p>Email: {userData?.email}</p>
@@ -132,10 +132,10 @@ const closeModal = () => {
           <p>Weight: {userData?.weight}</p>
           <p>BMI: {finalBmi}</p>
         </div>
-        <div className="w-full sm:w-1/2 p-2 bg-pink-100 rounded-lg">
-          <div className="bg-dark-pink p-4">
-            <h2 className="text-2xl mb-2">Goals</h2>
-            <p>Goal Weight: {userData?.goalWeight}</p>
+        <div className=" p-4">
+          <div className="bg-white rounded-lg shadow-md p-4 text-center">
+            <h2 className="text-2xl font-bold mb-2">Goals</h2>
+            <p>Goal Weight: {userData?.goalWeight} kg</p>
             <p>Workout Goal: {userData?.workoutGoal} times a week</p>
           </div>
         </div>
@@ -198,12 +198,14 @@ const closeModal = () => {
           </button>
         </div>
       )}
+      <div className="flex justify-center">
       <button
         onClick={() => setDisplayForm(!displayForm)}
-        className="bg-purple-700 hover:bg-purple-800 text-white p-2 rounded mt-4"
+        className="bg-purple-700 hover:bg-purple-800 text-white p-2 rounded mt-10"
       >
         Edit Details
       </button>
+      </div>
       <ThankYouModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} openModal={openModal} closeModal={closeModal} />
     </div>
   </div>

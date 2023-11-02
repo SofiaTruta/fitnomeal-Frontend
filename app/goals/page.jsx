@@ -9,21 +9,19 @@ import { GiWeightLiftingUp } from 'react-icons/gi';
 import { GiProgression } from 'react-icons/gi';
 
 export default function Goals() {
-
+// Define states
   const [userWorkoutGoal, setUserWorkoutGoal] = useState(0); // Workout goal from the database
-  const [weeklyWorkouts, setWeeklyWorkouts] = useState(0); 
-
-
+  const [completedWorkouts, setCompletedWorkouts] = useState([]); // Array to store completed workouts
   const [currentWeight, setCurrentWeight] = useState(null); // Current weight in kg
   const [goalWeight, setGoalWeight] = useState(null); // Goal weight in kg
 
-  const workoutsPercentage = (weeklyWorkouts / userWorkoutGoal) * 100;
+  const workoutsPercentage = (completedWorkouts.length/ userWorkoutGoal) * 100;
   const weightProgress = (currentWeight - goalWeight) < 0
     ? ((currentWeight - 60) / (goalWeight - 60)) * 100
     : ((goalWeight - currentWeight) / (goalWeight - 60)) * 100;
 
   let progressMessage = "Keep pushing, you can do it!";
-  if (weeklyWorkouts >= userWorkoutGoal) {
+  if (completedWorkouts.length >= userWorkoutGoal) {
     progressMessage = "Well done! You did it!";
   } else if (workoutsPercentage >= 50) {
     progressMessage = "Almost there, keep pushing!";
@@ -82,12 +80,12 @@ export default function Goals() {
 
           const workoutsResult = await workoutsResponse.json();
 
-          const weeklyWorkoutsData = workoutsResult.filter((workout) => {
+          const completedWorkoutsData = workoutsResult.filter((workout) => {
             const workoutDate = new Date(workout.date);
-            return workoutDate >= oneWeekAgo && workoutDate <= currentDate;
+            return workoutDate >= oneWeekAgo && workoutDate <= currentDate && workout.status === "completed";
           });
 
-          setWeeklyWorkouts(weeklyWorkoutsData.length);
+          setCompletedWorkouts(completedWorkoutsData);
         } catch (error) {
           console.error("Error fetching data", error);
         }
@@ -105,7 +103,7 @@ export default function Goals() {
         <div className="section">
           <h2>Your Weekly Workouts</h2>
           <GiWeightLiftingUp size={40} color="purple" />
-          <p>Number of Workouts this week: {weeklyWorkouts}</p>
+          <p>Number of Workouts this week: {completedWorkouts.length}</p>
         </div>
 
         <div className="section">
@@ -119,7 +117,7 @@ export default function Goals() {
           <p className="progressDetails">
             Your goal: {userWorkoutGoal} workouts per week
             <br />
-            Workouts completed: {weeklyWorkouts}
+            Workouts completed: {completedWorkouts.length}
           </p>
         </div>
 
