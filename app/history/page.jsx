@@ -3,6 +3,8 @@ import { useSession } from "next-auth/react";
 import NavBar from "@/components/navbar/NavBar";
 import { useEffect, useState } from "react";
 
+
+
 export default function WorkoutHistoryPage() {
   const { data: session, status } = useSession();
   const [workoutHistory, setWorkoutHistory] = useState(null);
@@ -43,18 +45,31 @@ export default function WorkoutHistoryPage() {
 
   return (
     <div>
-      <NavBar workout={workoutHistory} />
-      <h1>WorkoutHistoryPage</h1>
+    <NavBar workout={workoutHistory} />
+    <h1 className="text-3xl font-semibold mb-4">Workout History</h1>
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
       {workoutHistory ? (
         workoutHistory.map((workout, index) => (
-          <div key={index}>
-            <p>Date: {new Date(workout.date).toLocaleDateString()}</p>
-            <p>Status: {workout.status}</p>
+          <div key={index} className="bg-white shadow-lg rounded p-4">
+            <p className="text-lg font-semibold">
+              Date:{" "}
+              {new Date(workout.date).toLocaleDateString("en-US", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+            <p className="text-gray-600">Status: {workout.status}</p>
+            <button className="btn btn-purple">
+              See More
+            </button>
           </div>
         ))
       ) : (
         <p>Loading workout history...</p>
       )}
     </div>
+  </div>
   );
 }
