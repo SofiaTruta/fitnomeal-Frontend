@@ -23,7 +23,6 @@ export default function FirstLogin() {
   function handleChange(evt) {
     const newFormData = { ...formData, [evt.target.name]: evt.target.value };
     setFormData(newFormData);
-    console.log(formData);
   }
 
   async function submitDetails() {
@@ -54,7 +53,7 @@ export default function FirstLogin() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center h-screen" style={{background:'url(https://images.unsplash.com/photo-1556139943-4bdca53adf1e?auto=format&fit=crop&q=80&w=1974&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)', backgroundSize: 'cover', backgroundPosition: 'center'}}>
       <h1 className="text-center text-4xl font-extrabold signUp">Tell us more about yourself</h1>
       <div className="form-container">
         <label className="form-label">Name</label>

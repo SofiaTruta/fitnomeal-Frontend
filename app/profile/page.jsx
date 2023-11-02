@@ -15,7 +15,7 @@ export default function Profile() {
     weight: 0,
     height: 0,
     goalWeight: 0,
-    workoutGoal: 0
+    workoutGoal: 0,
   });
 
 const openModal = () => {
@@ -109,7 +109,7 @@ const closeModal = () => {
   
 
   return (
-    <div className="bg-purple-50 min-h-screen text-color-dark">
+    <div className="bg-purple-100 min-h-screen text-color-dark">
     <NavBar />
     <div className="p-4">
       <h1 className="text-4xl font-bold text-center mb-4">Profile Page</h1>
