@@ -41,7 +41,7 @@ export default function DailyWorkoutsPage() {
   const Workouts = finalWorkout.map((workout, index) => (
     <div key={workout._id} className="bg-pink-100 rounded-lg shadow-lg p-4 m-4">
       <GiMuscleUp size={20} color="purple" />
-      <h2 className="text-xl font-semibold mb-2">{index + 1}. Exercise: {workout.name}</h2>
+      <h2 className="text-xl font-semibold mb-2">{index + 1}. {workout.name}</h2>
       <h2 className="text-base text-gray-600">Target Muscle: {workout.target}</h2>
     </div>
   ));

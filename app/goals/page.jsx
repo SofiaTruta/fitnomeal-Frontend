@@ -16,59 +16,64 @@ export default function Goals() {
   const [goalWeight, setGoalWeight] = useState(null); // Goal weight in kg
 
   const workoutsPercentage = (completedWorkouts.length/ userWorkoutGoal) * 100;
-  const weightProgress = (currentWeight - goalWeight) < 0
-    ? ((currentWeight - 60) / (goalWeight - 60)) * 100
-    : ((goalWeight - currentWeight) / (goalWeight - 60)) * 100;
-
-  let progressMessage = "Keep pushing, you can do it!";
-  if (completedWorkouts.length >= userWorkoutGoal) {
-    progressMessage = "Well done! You did it!";
-  } else if (workoutsPercentage >= 50) {
-    progressMessage = "Almost there, keep pushing!";
+  const weightDifference = Math.abs(goalWeight - currentWeight);
+  const weightChangeDirection = goalWeight > currentWeight ? "gain" : "lose";
+  let weightProgress = 0;
+  
+  if (weightChangeDirection === "gain") {
+    weightProgress = (weightDifference / Math.abs(goalWeight)) * 100;
+  } else {
+    weightProgress = ((Math.abs(goalWeight) - weightDifference) / Math.abs(goalWeight)) * 100;
   }
+  
 
-  if ((currentWeight - goalWeight) < 0) {
-    progressMessage = "Keep going, you can do it!";
-  } else if ((currentWeight - goalWeight) > 0) {
-    progressMessage = "Keep going, you can do it!";
-  }
+    let progressMessage = "Keep pushing, you can do it!";
+    if (completedWorkouts.length >= userWorkoutGoal) {
+      progressMessage = "Well done! You've reached your weekly workout goal!";
+    } else if (workoutsPercentage >= 50) {
+      progressMessage = "You're making good progress. Keep it up!";
+    } else if (completedWorkouts.length > 0) {
+      progressMessage = "You're on your way. Keep going!";
+    } else {
+      progressMessage = "Get started on your workouts!";
+    }
 
-  const { data: session, status } = useSession();
+    const { data: session, status } = useSession();
 
-  const WORKOUT_DATA = process.env.NEXT_PUBLIC_BACKEND_CONNECTION;
-
-  useEffect(() => {
-    if (session) {
-      const email = session.user.email;
-      const currentDate = new Date();
-      const oneWeekAgo = new Date();
-      oneWeekAgo.setDate(currentDate.getDate() - 7);
-
-      async function fetchData() {
-        try {
-          // Fetch user's current weight and goal weight from your API
-          const response = await fetch(
-            `${WORKOUT_DATA}/users/find/${email}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
+    const WORKOUT_DATA = process.env.NEXT_PUBLIC_BACKEND_CONNECTION;
+  
+    useEffect(() => {
+      if (session) {
+        const email = session.user.email;
+        const currentDate = new Date();
+        const oneWeekAgo = new Date();
+        oneWeekAgo.setDate(currentDate.getDate() - 7);
+  
+        async function fetchData() {
+          try {
+            // Fetch user's current weight and goal weight from your API
+            const response = await fetch(
+              `${WORKOUT_DATA}/users/find/${email}`,
+              {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+  
+            const result = await response.json();
+  
+            if (result) {
+              setUserWorkoutGoal(result.workoutGoal);
+              setCurrentWeight(result.weight);
+              setGoalWeight(result.goalWeight);
+            } else {
+              console.error("User not found");
             }
-          );
 
-          const result = await response.json();
-
-          if (result) {
-            setUserWorkoutGoal(result.workoutGoal);
-            setCurrentWeight(result.weight);
-            setGoalWeight(result.goalWeight);
-          } else {
-            console.error("User not found");
-          }
-
-          // Fetch and update the number of weekly workouts
-          const workoutsResponse = await fetch(
+           // Fetch and update the number of weekly workouts
+           const workoutsResponse = await fetch(
             `${WORKOUT_DATA}/workout-history/history/${email}`,
             {
               method: "GET",
@@ -130,25 +135,17 @@ export default function Goals() {
             <progress value={weightProgress} max="100"></progress>
           </div>
           <div>
-            <p className="progressDetails">
-              {currentWeight > goalWeight ? (
-                <span>
-                  Your current weight: {currentWeight} kg
-                  <br />
-                  Your goal weight: {goalWeight} kg
-                  <br />
-                  {currentWeight - goalWeight} kg more to lose till you reach your goal
-                </span>
-              ) : (
-                <span>
-                  Your current weight: {currentWeight} kg
-                  <br />
-                  Your goal weight: {goalWeight} kg
-                  <br />
-                  {goalWeight - currentWeight} kg more to gain till you reach your goal
-                </span>
-              )}
-            </p>
+          <p className="progressDetails">
+            Your current weight: {currentWeight} kg
+            <br />
+            Your goal weight: {goalWeight} kg
+            <br />
+            {currentWeight === goalWeight
+              ? "Congratulations! You've hit your goal weight."
+              : weightChangeDirection === "gain"
+              ? `${goalWeight - currentWeight} kg more to gain till you reach your goal`
+              : `${currentWeight - goalWeight} kg more to lose till you reach your goal`}
+          </p>
           </div>
         </div>
       <Link href="/profile">
@@ -158,4 +155,3 @@ export default function Goals() {
     </div>
   );
 }
-
