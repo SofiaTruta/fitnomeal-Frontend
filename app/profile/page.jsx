@@ -17,13 +17,14 @@ export default function Profile() {
     goalWeight: 0,
     workoutGoal: 0,
   });
+  console.log(userData?.weight);
 
-const openModal = () => {
+  const openModal = () => {
     setIsModalOpen(true)
-}
-const closeModal = () => {
+  }
+  const closeModal = () => {
     setIsModalOpen(false)
-}
+  }
 
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const closeModal = () => {
   function handleChangeHeight(evt) {
     setFormData({
       ...formData,
-     height: evt.target.value
+      height: evt.target.value
     });
   }
   function handleChangeWeight(evt) {
@@ -77,137 +78,144 @@ const closeModal = () => {
   async function submitDetails() {
     openModal();
     setDisplayForm(false);
-  
+
     try {
-      const response = await fetch(`${WORKOUT_DATA}/users/update`, {
+      await fetch(`${WORKOUT_DATA}/users/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           email: session?.user?.email,
-          weight: formData.weight,
-          height: formData.height,
-          goalWeight: formData.goalWeight,
-          workoutGoal: formData.workoutGoal,
+          weight: (formData.weight),
+          height: (formData.height),
+          goalWeight: (formData.goalWeight),
+          workoutGoal: (formData.workoutGoal),
         }),
       })
-      .then(() => 
-        // Update the user data state with the new values
-        setUserData((prevUserData) => ({
-          ...prevUserData,
-          weight: formData.weight,
-          height: formData.height,
-          goalWeight: formData.goalWeight,
-          workoutGoal: formData.workoutGoal,
-        }))
-      )
+        .then(() =>
+          // Update the user data state with the new values
+          setUserData((prevUserData) => ({
+            ...prevUserData,
+            weight: formData.weight,
+            height: formData.height,
+            goalWeight: formData.goalWeight,
+            workoutGoal: formData.workoutGoal,
+          }))
+        )
     } catch (error) {
       console.log("Error sending form data", error);
     }
   }
-  
+
   function bmi() {
-    const height2 = (userData?.height * userData?.height) 
+    const height2 = (userData?.height * userData?.height)
     const height = (height2 / 10000)
     const height3 = height.toFixed(2)
-    const bmi =  (userData?.weight / height3 )
+    const bmi = (userData?.weight / height3)
     const finalBmi = bmi.toFixed(2)
     return finalBmi
   }
-  
+
   const finalBmi = bmi()
+
+  function allFormFieldsHaveValue() {
+    return Object.values(formData).every((value) => value !== '' && value !== 0);
+  }
+
 
   return (
     <div className="bg-purple-100 min-h-screen text-color-dark">
-    <NavBar />
-    <div className="p-4">
-      <h1 className="text-4xl font-bold text-center mt-8 mb-8">Profile Page</h1>
-      <div className="flex flex-wrap justify-center">
-        <div className="bg-white rounded-lg shadow-md p-4">
-          <h2 className="text-2xl mb-2">Details</h2>
-          <p>Name: {userData?.name}</p>
-          <p>Email: {userData?.email}</p>
-          <p>Height: {userData?.height}</p>
-          <p>Weight: {userData?.weight}</p>
-          <p>BMI: {finalBmi}</p>
-        </div>
-        <div className=" p-4">
-          <div className="bg-white rounded-lg shadow-md p-4 text-center">
-            <h2 className="text-2xl font-bold mb-2">Goals</h2>
-            <p>Goal Weight: {userData?.goalWeight} kg</p>
-            <p>Workout Goal: {userData?.workoutGoal} times a week</p>
+      <NavBar />
+      <div className="p-4">
+        <h1 className="text-4xl font-bold text-center mt-8 mb-8">Profile Page</h1>
+        <div className="flex flex-wrap justify-center">
+          <div className="bg-white rounded-lg shadow-md p-4">
+            <h2 className="text-2xl mb-2">Details</h2>
+            <p>Name: {userData?.name}</p>
+            <p>Email: {userData?.email}</p>
+            <p>Height: {userData?.height}</p>
+            <p>Weight: {userData?.weight}</p>
+            <p>BMI: {finalBmi}</p>
+          </div>
+          <div className=" p-4">
+            <div className="bg-white rounded-lg shadow-md p-4 text-center">
+              <h2 className="text-2xl font-bold mb-2">Goals</h2>
+              <p>Goal Weight: {userData?.goalWeight} kg</p>
+              <p>Workout Goal: {userData?.workoutGoal} times a week</p>
+            </div>
           </div>
         </div>
-      </div>
-      {displayForm && (
-        <div className="p-4">
-          <label>Name</label>
-          <input
-            type="text"
-            disabled
-            value={userData?.name}
-            name="name"
-            className="w-full bg-purple-100 p-2 rounded mt-2"
-          />
-          <label>Email</label>
-          <input
-            type="text"
-            disabled
-            value={userData?.email}
-            name="email"
-            className="w-full bg-purple-100 p-2 rounded mt-2"
-          />
-          <label>Height</label>
-          <input
-            type="number"
-            placeholder={userData?.height}
-            name="height"
-            onChange={handleChangeHeight}
-            className="w-full bg-purple-100 p-2 rounded mt-2"
-          />
-          <label>Weight</label>
-          <input
-            type="number"
-            placeholder={userData?.weight}
-            name="weight"
-            onChange={handleChangeWeight}
-            className="w-full bg-purple-100 p-2 rounded mt-2"
-          />
-          <label>Weight Goal</label>
-          <input
-            type="number"
-            placeholder={userData?.goalWeight}
-            name="goalWeight"
-            onChange={handleChangeWeightGoal}
-            className="w-full bg-purple-100 p-2 rounded mt-2"
-          />
-          <label>Workouts per week</label>
-          <input
-            type="number"
-            placeholder={userData?.workoutGoal}
-            name="workoutGoal"
-            onChange={handleChangeWorkoutGoal}
-            className="w-full bg-purple-100 p-2 rounded mt-2"
-          />
+        {displayForm && (
+          <div className="p-4">
+            <label>Name</label>
+            <input
+              type="text"
+              disabled
+              value={userData?.name}
+              name="name"
+              className="w-full bg-purple-100 p-2 rounded mt-2"
+            />
+            <label>Email</label>
+            <input
+              type="text"
+              disabled
+              value={userData?.email}
+              name="email"
+              className="w-full bg-purple-100 p-2 rounded mt-2"
+            />
+            <label>Height*</label>
+            <input
+              type="number"
+              placeholder={userData?.height}
+              name="height"
+              onChange={handleChangeHeight}
+              className="w-full bg-purple-100 p-2 rounded mt-2"
+            />
+            <label>Weight*</label>
+            <input
+              type="number"
+              placeholder={userData?.weight}
+              name="weight"
+              onChange={handleChangeWeight}
+              className="w-full bg-purple-100 p-2 rounded mt-2"
+            />
+            <label>Weight Goal*</label>
+            <input
+              type="number"
+              placeholder={userData?.goalWeight}
+              name="goalWeight"
+              onChange={handleChangeWeightGoal}
+              className="w-full bg-purple-100 p-2 rounded mt-2"
+            />
+            <label>Workouts per week*</label>
+            <input
+              type="number"
+              placeholder={userData?.workoutGoal}
+              name="workoutGoal"
+              onChange={handleChangeWorkoutGoal}
+              className="w-full bg-purple-100 p-2 rounded mt-2"
+            />
+            <button
+              disabled={!allFormFieldsHaveValue()}
+              onClick={submitDetails}
+              className="w-full bg-purple-700 text-white p-2 rounded mt-4"
+            >
+              Submit Details
+            </button>
+
+          </div>
+        )}
+        <div className="flex justify-center">
           <button
-            onClick={submitDetails}
-            className="w-full bg-purple-700 text-white p-2 rounded mt-4"
+            onClick={() => setDisplayForm(!displayForm)}
+            className="bg-purple-700 hover:bg-purple-800 text-white p-2 rounded mt-10"
           >
-            Submit Details
+            Edit Details
           </button>
         </div>
-      )}
-      <div className="flex justify-center">
-      <button
-        onClick={() => setDisplayForm(!displayForm)}
-        className="bg-purple-700 hover:bg-purple-800 text-white p-2 rounded mt-10"
-      >
-        Edit Details
-      </button>
+        <ThankYouModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} openModal={openModal} closeModal={closeModal} />
       </div>
-      <ThankYouModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} openModal={openModal} closeModal={closeModal} />
     </div>
-  </div>
   )
 }
